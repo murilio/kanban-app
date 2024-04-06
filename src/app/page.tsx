@@ -78,16 +78,26 @@ export default function Home() {
                   {item.map((ch, iCh) => (
                     <div key={ch.id}>
                       <Draggable draggableId={ch.id} index={iCh}>
-                        {(provided, snapshot) => (
-                          <div
-                            ref={provided.innerRef}
-                            className='p-2'
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <h4>{ch.content}</h4>
-                          </div>
-                        )}
+                        {(provided, snapshot) => {
+                          console.log('@@@@@@', provided.dragHandleProps)
+                          const styleDragging = {
+                            backgroundColor: 'blue',
+                            transform: 'rotate(45deg)!important',
+                            ...provided.draggableProps.style,
+                          }
+
+                          return (
+                            <div
+                              ref={provided.innerRef}
+                              className='p-2'
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={snapshot.isDragging ? styleDragging : { ...provided.draggableProps.style }}
+                            >
+                              <h4>{ch.content}</h4>
+                            </div>
+                          )
+                        }}
                       </Draggable>
                     </div>
                   ))}
