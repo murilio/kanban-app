@@ -1,57 +1,59 @@
-export const APIMOCK = [
+import { EPriority, EType, TDataApi } from "../interfaces/data.interface";
+
+export const APIMOCK: TDataApi[] = [
   {
     title: "To Do",
-    type: "to-do",
+    type: EType.ToDo,
     options: [
       {
         title: "Brainstorming",
         description:
           "Brainstorming brings team members' diverse experience into play.",
-        priority: "Low",
+        priority: EPriority.Low,
       },
       {
         title: "Wireframes",
         description:
           "Low fidelity wireframes include the most basic content and visuals.",
-        priority: "Medium",
+        priority: EPriority.Medium,
       },
       {
         title: "Research",
         description:
           "User research helps you to create an optimal product for users.",
-        priority: "High",
+        priority: EPriority.Hight,
       },
     ],
   },
   {
     title: "On Progress",
-    type: "on-progress",
+    type: EType.OnProgress,
     options: [
       {
         title: "Onboarding Illustrations ",
         description: "Onboarding Illustrations ",
-        priority: "Low",
+        priority: EPriority.Low,
       },
       {
         title: "Moodboard",
         description: "Moodboard",
-        priority: "Medium",
+        priority: EPriority.Medium,
       },
     ],
   },
   {
     title: "Done",
-    type: "done",
+    type: EType.Done,
     options: [
       {
         title: "Mobile App Design",
         description: "Mobile App Design",
-        priority: "Completed",
+        priority: EPriority.Completed,
       },
       {
         title: "Design System",
         description: "It just needs to adapt the UI from what you did before ",
-        priority: "Completed",
+        priority: EPriority.Completed,
       },
     ],
   },

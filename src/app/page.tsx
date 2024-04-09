@@ -2,6 +2,7 @@
 
 import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd';
 import { CSSProperties, useState } from 'react';
+import { EType } from './interfaces/data.interface';
 import { APIMOCK } from './mock/api.mock';
 import { move, reorder } from './utils';
 
@@ -38,14 +39,16 @@ export default function Home() {
       <DragDropContext onDragEnd={onDragEnd}>
         {state.map((item, i) => {
           const colors = {
-            'to-do': 'border-violet-500',
-            'on-progress': 'border-orange-500',
-            'done': 'border-green-500',
+            [EType.ToDo]: 'border-violet-500',
+            [EType.OnProgress]: 'border-orange-500',
+            [EType.Done]: 'border-green-500',
           }
 
           return (
             <section key={i} className='w-1/3 bg-slate-100 rounded-md'>
-              <h3 className={`py-4 mx-4 border-b-2 ${colors[item.type]}`}>{item.title} <span className='text-xs w-2 h-2 bg-slate-300 px-2 py-1 rounded-full'>{item.options.length}</span></h3>
+              <h3 className={`py-4 mx-4 border-b-2 ${colors[item.type]}`}>
+                {item.title} <span className='text-xs w-2 h-2 bg-slate-300 px-2 py-1 rounded-full'>{item.options.length}</span>
+              </h3>
               <Droppable droppableId={i + ''} key={i}>
                 {(provided, snapshot) => {
                   const styleDefault = 'border-dashed border-2 border-slate-100 m-4 min-h-80 w-auto'
