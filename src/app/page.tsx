@@ -1,43 +1,12 @@
 "use client"
 
-import { DragDropContext, Draggable, DraggableLocation, DropResult, Droppable } from '@hello-pangea/dnd';
-import { useState } from 'react';
-
-const getItems = (length: number, offset = 0) => {
-  return Array.from({ length: length }, (v, k) => k).map(k => ({
-    id: `0${k + offset}`,
-    content: `mock-0${k + offset}`
-  }));
-}
-
-const reorder = <T extends unknown>(list: T[], startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
-
-
-function move<T>(source: T[], destination: T[], droppableSource: DraggableLocation, droppableDestination: DraggableLocation) {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-  destClone.splice(droppableDestination.index, 0, removed);
-
-  const result = {} as {
-    [key: string]: T[]
-  };
-
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
+import { DragDropContext, Draggable, DropResult, Droppable } from '@hello-pangea/dnd';
+import { CSSProperties, useState } from 'react';
+import { APIMOCK } from './mock/api.mock';
+import { move, reorder } from './utils';
 
 export default function Home() {
-  const [state, setState] = useState([getItems(10), getItems(1, 10)])
+  const [state, setState] = useState(APIMOCK)
 
   function onDragEnd(result: DropResult) {
     const { source, destination } = result
@@ -48,67 +17,86 @@ export default function Home() {
     const destinationId = +destination.droppableId
 
     if (sourceId === destinationId) {
-      const items = reorder(state[sourceId], source.index, destination.index);
+      const items = reorder(state[sourceId].options, source.index, destination.index);
+
       const newState = [...state];
-      newState[sourceId] = items;
+      newState[sourceId].options = items;
       setState(newState);
     } else {
-      const result = move(state[sourceId], state[destinationId], source, destination);
-      const newState = [...state];
-      newState[sourceId] = result[sourceId];
-      newState[destinationId] = result[destinationId];
+      const result = move(state[sourceId].options, state[destinationId].options, source, destination);
 
-      setState(newState.filter(group => group.length));
+      const newState = [...state];
+      newState[sourceId].options = result[sourceId];
+      newState[destinationId].options = result[destinationId];
+
+      setState(newState);
     }
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <section className='flex gap-10'>
-        {state.map((item, i) => (
-          <div key={i} className='w-3/12'>
-            <Droppable droppableId={i + ''}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  style={{ backgroundColor: snapshot.isDraggingOver ? '#f0a345' : '#ddd' }}
-                  {...provided.droppableProps}
-                  className='p-10'
-                >
-                  {item.map((ch, iCh) => (
-                    <div key={ch.id}>
-                      <Draggable draggableId={ch.id} index={iCh}>
-                        {(provided, snapshot) => {
-                          console.log('@@@@@@', provided.dragHandleProps)
-                          const styleDragging = {
-                            backgroundColor: 'blue',
-                            transform: 'rotate(45deg)!important',
-                            ...provided.draggableProps.style,
-                          }
+    <section className='flex gap-2'>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {state.map((item, i) => {
+          const colors = {
+            'to-do': 'border-violet-500',
+            'on-progress': 'border-orange-500',
+            'done': 'border-green-500',
+          }
 
-                          return (
-                            <div
-                              ref={provided.innerRef}
-                              className='p-2'
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={snapshot.isDragging ? styleDragging : { ...provided.draggableProps.style }}
-                            >
-                              <h4>{ch.content}</h4>
-                            </div>
-                          )
-                        }}
-                      </Draggable>
+          return (
+            <section key={i} className='w-1/3 bg-slate-100 rounded-md'>
+              <h3 className={`py-4 mx-4 border-b-2 ${colors[item.type]}`}>{item.title} <span className='text-xs w-2 h-2 bg-slate-300 px-2 py-1 rounded-full'>{item.options.length}</span></h3>
+              <Droppable droppableId={i + ''} key={i}>
+                {(provided, snapshot) => {
+                  const styleDefault = 'border-dashed border-2 border-slate-100 m-4 min-h-80 w-auto'
+                  const styleDraggingOver = 'bg-violet-100 border-dashed border-violet-400 border-2 rounded m-4 min-h-80 w-auto'
+
+                  return (
+                    <div
+                      ref={provided.innerRef}
+                      className={snapshot.isDraggingOver ? styleDraggingOver : styleDefault}
+                      {...provided.droppableProps}
+                    >
+                      {item.options.map((ch, iCh) => (
+                        <Draggable draggableId={`${i}${iCh}`} index={iCh} key={`${i}${iCh}`}>
+                          {(provided, snapshot) => {
+                            const transform = `${provided.draggableProps.style?.transform} rotate(10deg)`
+
+                            const styleDragging: CSSProperties = {
+                              backgroundColor: 'red',
+                              ...provided.draggableProps.style,
+                              transition: 'all 0.1s',
+                              transform,
+                            }
+
+                            const defaultStyle: CSSProperties = {
+                              ...provided.draggableProps.style
+                            }
+
+                            return (
+                              <div
+                                ref={provided.innerRef}
+                                className='p-4'
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={snapshot.isDragging ? styleDragging : defaultStyle}
+                              >
+                                <h4>{ch.title}</h4>
+                              </div>
+                            )
+                          }}
+                        </Draggable>
+                      ))}
+
+                      {provided.placeholder}
                     </div>
-                  ))}
-
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
-        ))}
-      </section>
-    </DragDropContext>
+                  )
+                }}
+              </Droppable>
+            </section>
+          )
+        })}
+      </DragDropContext>
+    </section>
   );
 }
