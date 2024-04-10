@@ -16,7 +16,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
       <body className={inter.className}>
         <Header />
         <div className="flex p-4">
-          <nav>Menu</nav>
+          {/* <nav>Menu</nav> */}
           <main className="grow">
             {children}
           </main>
