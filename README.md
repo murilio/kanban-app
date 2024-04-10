@@ -21,11 +21,7 @@ Inspired by [figma link](<https://www.figma.com/file/dxOcUDVbLggeOTXfRtAbkI/Proj
 
 ## 🚀 Technologies Used
 
-<code><img height="30" src="https://github.com/marwin1991/profile-technology-icons/assets/136815194/5f8c622c-c217-4649-b0a9-7e0ee24bd704"></code>
-<code><img height="30" src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png"></code>
-<code><img height="30" src="https://user-images.githubusercontent.com/25181517/202896760-337261ed-ee92-4979-84c4-d4b829c7355d.png"></code>  
-<code><img height="30" src="https://user-images.githubusercontent.com/25181517/192108372-f71d70ac-7ae6-4c0d-8395-51d8870c2ef0.png"></code>
-<code><img height="30" src="https://user-images.githubusercontent.com/25181517/189715289-df3ee512-6eca-463f-a0f4-c10d94a06b2f.png"></code>
+[![My Skills](https://skillicons.dev/icons?i=nextjs,react,tailwind,ts,git,figma)](https://murilio.dev)
 
 ## 📚 Future Features
 
