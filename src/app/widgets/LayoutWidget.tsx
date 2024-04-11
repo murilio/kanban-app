@@ -2,7 +2,7 @@
 
 import { ModalProvider } from "@/app/context/ModalContext"
 import { ReactNode } from "react"
-import { Header } from "../Header"
+import { Header } from "../components/Header"
 
 export const LayoutWidget = ({ children }: { children: ReactNode }) => {
   return (
