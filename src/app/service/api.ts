@@ -1,21 +1,22 @@
 import { TDataApi } from "../interfaces/data.interface";
-import { api_local } from "./mock";
+import { initialData } from "./data";
 
 const KEY_LOCAL = "@kanban-app/murilio";
 
 interface ITodo {
   title: string;
   description: string;
+  priority?: number;
 }
 
 const insertInitialLocal = () => {
   const localData = localStorage.getItem(KEY_LOCAL) || "";
   if (!localData) {
-    localStorage.setItem(KEY_LOCAL, JSON.stringify(api_local));
+    localStorage.setItem(KEY_LOCAL, JSON.stringify(initialData));
   }
 };
 
-export const createTodo = ({ title, description }: ITodo) => {
+export const createTodo = ({ title, description, priority = 0 }: ITodo) => {
   return new Promise((resolve, reject) => {
     // caso n tenha os dados inicias, é inserido
     insertInitialLocal();
@@ -24,16 +25,17 @@ export const createTodo = ({ title, description }: ITodo) => {
 
     try {
       if (localData) {
-        const saveData: [any] = JSON.parse(localData);
+        const saveData: TDataApi[] = JSON.parse(localData);
         saveData.filter(
           (item) =>
             item.type === 0 &&
             item.options.push({
               title,
               description,
-              priority: Math.floor(Math.random() * 3),
+              priority,
             })
         );
+
         localStorage.setItem(KEY_LOCAL, JSON.stringify(saveData));
       }
 
@@ -54,7 +56,7 @@ export const listTodos = (type?: number) => {
 
     const localData = localStorage.getItem(KEY_LOCAL) || "";
 
-    const returnData: [any] = JSON.parse(localData);
+    const returnData = JSON.parse(localData);
 
     const filterData = returnData[Number(type)] || returnData;
 

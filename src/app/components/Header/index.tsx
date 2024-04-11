@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { FiSearch } from "react-icons/fi";
 
-
 export const Header = () => {
   return (
     <header className="flex items-center h-20 gap-10 w-full px-4 border border-b-gray-300">
