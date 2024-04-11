@@ -1,6 +1,6 @@
-import type { Metadata } from "next";
+import { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Header } from "./components/Header";
+import { LayoutWidget } from "./components/widgets/LayoutWidget";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -14,13 +14,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <Header />
-        <div className="flex p-4">
-          {/* <nav>Menu</nav> */}
-          <main className="grow">
-            {children}
-          </main>
-        </div>
+        <LayoutWidget>
+          {children}
+        </LayoutWidget>
       </body>
     </html>
   );
