@@ -70,10 +70,11 @@ export default function Home() {
       <Modal isOpen={isModalOpen} onClose={handleModal}>
         <h3 className='mb-4 '>Create To Do</h3>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
-          <input className={`border border-slate-600 outline-none px-3 min-h-10 my-1 rounded w-80 ${errors.title && 'border-red-500'}`} placeholder='Insert card title' {...register("title", { required: true })} />
+          <input className={`bg-zinc-100 text-sm outline-none px-3 min-h-10 my-1 rounded w-full ${errors.title && 'border-red-500'}`} placeholder='Insert card title' {...register("title", { required: true })} />
           {errors.title && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Title is required</span>}
 
-          <input className={`border border-slate-600 outline-none px-3 min-h-10 my-1 rounded w-80 ${errors.description && 'border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} />
+          <textarea rows={5} className={`bg-zinc-100 text-sm outline-none p-3 min-h-30 h-full my-1 rounded w-[400px] ${errors.description && 'border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} >
+          </textarea>
           {errors.description && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Description is required</span>}
 
           <button type="submit" className='rounded-md bg-orange-200 mt-4 min-h-10'>
