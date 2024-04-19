@@ -10,7 +10,7 @@ export const LayoutWidget = ({ children }: { children: ReactNode }) => {
       <Header />
       <div className="flex p-4">
         {/* <nav>Menu</nav> */}
-        <main className="grow">
+        <main className="grow pb-2 overflow-x-scroll">
           {children}
         </main>
       </div>

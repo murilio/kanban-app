@@ -70,10 +70,10 @@ export default function Home() {
       <Modal isOpen={isModalOpen} onClose={handleModal}>
         <h3 className='mb-4 '>Create To Do</h3>
         <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col'>
-          <input className={`bg-zinc-100 text-sm outline-none px-3 min-h-10 my-1 rounded w-full ${errors.title && 'border-red-500'}`} placeholder='Insert card title' {...register("title", { required: true })} />
+          <input className={`bg-zinc-100 text-sm outline-none px-3 min-h-10 my-1 rounded w-full ${errors.title && 'border border-red-500'}`} placeholder='Insert card title' {...register("title", { required: true })} />
           {errors.title && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Title is required</span>}
 
-          <textarea rows={5} className={`bg-zinc-100 text-sm outline-none p-3 min-h-30 h-full my-1 rounded w-[400px] ${errors.description && 'border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} >
+          <textarea rows={5} className={`bg-zinc-100 text-sm outline-none p-3 min-h-30 h-full my-1 rounded w-[400px] ${errors.description && 'border border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} >
           </textarea>
           {errors.description && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Description is required</span>}
 
@@ -83,7 +83,7 @@ export default function Home() {
         </form>
       </Modal>
 
-      <section className='flex gap-2 h-full'>
+      <section className='flex gap-2 min-w-[768px]'>
         <DragDropContext onDragEnd={onDragEnd}>
           {state.map((item, i) => {
             const colors = {
@@ -93,7 +93,7 @@ export default function Home() {
             }
 
             return (
-              <section key={i} className='flex flex-col w-1/3 bg-slate-100 rounded-md'>
+              <section key={i} className='flex flex-col w-1/3 bg-slate-100 rounded-md min-h-[400px]'>
                 <h3 className={`py-4 mx-4 border-b-2 ${colors[item.type]}`}>
                   {item.title} <span className='text-xs w-2 h-2 bg-slate-300 px-2 py-1 rounded-full'>{item.options.length}</span>
                 </h3>
