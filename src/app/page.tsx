@@ -73,7 +73,7 @@ export default function Home() {
           <input className={`bg-zinc-100 text-sm outline-none px-3 min-h-10 my-1 rounded w-full ${errors.title && 'border border-red-500'}`} placeholder='Insert card title' {...register("title", { required: true })} />
           {errors.title && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Title is required</span>}
 
-          <textarea rows={5} className={`bg-zinc-100 text-sm outline-none p-3 min-h-30 h-full my-1 rounded w-[400px] ${errors.description && 'border border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} >
+          <textarea rows={5} className={`bg-zinc-100 text-sm outline-none p-3 min-h-30 h-full my-1 rounded w-[250px] md:w-[400px] ${errors.description && 'border border-red-500'}`} placeholder='Insert card description' {...register("description", { required: true })} >
           </textarea>
           {errors.description && <span className='border border-red-500 bg-red-100 px-1 rounded text-xs mb-4 text-zinc-700'>Description is required</span>}
 
